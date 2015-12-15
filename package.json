@@ -29,7 +29,8 @@
     "lodash": "~2.4.1",
     "lru-cache": "~2.5.0",
     "minimist": "1.1.0",
-    "negotiator": "~0.4.9"
+    "negotiator": "~0.4.9",
+    "triple-graph": "git+https://<ACCESS_TOKEN>:x-oauth-basic@github.ugent.be:eebral/master-thesis-triple-graph.git"
   },
   "optionalDependencies": {
     "xml": ">=1.0.0"
