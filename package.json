@@ -42,7 +42,7 @@
     "sinon": "~1.9.0",
     "chai": "~1.9.0",
     "sinon-chai": "~2.5.0",
-    "pre-commit": "~0.0.9"
+    "pre-commit": "^1.0.5"
   },
   "pre-commit": [
     "hint",
