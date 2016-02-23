@@ -30,7 +30,7 @@
     "lru-cache": "~2.5.0",
     "minimist": "1.1.0",
     "negotiator": "~0.4.9",
-    "triple-graph": "git+https://9970afd8b565d5e82bf1ea26008ef3e8f7680b33:x-oauth-basic@github.ugent.be:eebral/master-thesis-triple-graph.git"
+    "triple-graph": "git+https://github.ugent.be:eebral/master-thesis-triple-graph.git#rewrite"
   },
   "optionalDependencies": {
     "xml": ">=1.0.0"
