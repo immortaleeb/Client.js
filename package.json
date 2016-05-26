@@ -36,13 +36,14 @@
     "xml": ">=1.0.0"
   },
   "devDependencies": {
+    "chai": "~1.9.0",
+    "csv-write-stream": "^2.0.0",
     "jsdoc": "^3.3.0-beta3",
     "jshint": "~2.1.10",
     "mocha": "~1.17.1",
+    "pre-commit": "^1.0.5",
     "sinon": "~1.9.0",
-    "chai": "~1.9.0",
-    "sinon-chai": "~2.5.0",
-    "pre-commit": "^1.0.5"
+    "sinon-chai": "~2.5.0"
   },
   "pre-commit": [
     "hint",

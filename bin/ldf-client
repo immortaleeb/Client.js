@@ -63,7 +63,10 @@ try {
   case 'SELECT':
     writer = new ldf.SparqlResultWriter(mimeType, sparqlIterator);
     writer.on('data', function (data) { process.stdout.write(data); });
-    writer.on('end', function () { QueryLogger.stopProcessingQuery(); });
+    writer.on('end', function () {
+      QueryLogger.stopProcessingQuery();
+      MeasureLogger.close();
+    });
     break;
   // Write an RDF representation of all results
   case 'CONSTRUCT':
@@ -74,6 +77,7 @@ try {
                   .on('end',  function () {
                     writer.end();
                     QueryLogger.stopProcessingQuery();
+                    MeasureLogger.close();
                   });
     break;
   default:
