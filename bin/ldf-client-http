@@ -20,7 +20,7 @@ var MIME_PLAIN  = 'text/plain',
 // Retrieve and check arguments
 var args = require('minimist')(process.argv.slice(2));
 if (!args._.length || args.h || args.help) {
-  console.error('usage: ldf-client-http startFragment1 [startFragment2 ...] [-c config.json] [-p port] [-t timeout] [--help]');
+  console.error('usage: ldf-client-http startFragment1 [startFragment2 ...] [-c config.json] [-p port] [-t timeout] [-m measurements] [--help]');
   return process.exit(1);
 }
 var node = process.argv[0],
@@ -29,7 +29,8 @@ var node = process.argv[0],
     timeout = (parseInt(args.t, 10) || 60) * 1000,
     configFile = args.c || path.join(__dirname, '../config-default.json'),
     clientArgs = [clientPath, '-c', configFile].concat(startFragments),
-    ioSettings = { stdio: ['ignore', 'pipe', 'pipe'] };
+    ioSettings = { stdio: ['ignore', 'pipe', 'pipe'] },
+    measurementsName = args.m || "example";
 
 // Start the server
 var server = http.createServer(handleRequest);
@@ -61,12 +62,20 @@ function handleRequest(request, response) {
   }
 }
 
+var requestCount = 0;
+function nextMeasurement() {
+  var name = measurementsName + requestCount;
+  requestCount++;
+  return name;
+}
+
 // Writes the result of the given SPARQL query
 function writeQueryResult(request, response, query) {
   // Get the results of the query from the client
   var hasTriplesResult = /\s*(?:CONSTRUCT|DESCRIBE)/i.test(query),
       mimeType = hasTriplesResult ? MIME_TURTLE : new Negotiator(request).mediaType(availableMimeTypes),
-      client = spawn(node, clientArgs.concat(['-t', mimeType, '-q', query]), ioSettings);
+      measurement = nextMeasurement(),
+      client = spawn(node, clientArgs.concat(['-t', mimeType, '-q', query, '-m', measurement]), ioSettings);
 
   // Write a successful data response
   client.stdout.setEncoding('utf8');
