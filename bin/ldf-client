@@ -28,6 +28,7 @@ if (!(args.q || args.f) && args._.length < 2 || args._.length < 1 || args.h || a
     "   -t               determines the MIME type of the output (e.g., application/json)",
     "   -l               sets the log level (e.g., debug, warn, info)",
     "   --csv            outputs logging in CSV format (only if logging level is set)",
+    "   -m               sets the name for the set of measurements that is going to be executed",
     "   --help           prints this message",
     "   --listformats    prints the supported MIME types",
   ].join('\n'));
@@ -46,7 +47,8 @@ var configFile = args.c ? args.c : path.join(__dirname, '../config-default.json'
     queryFile = args.f || args.q || args._.pop(),
     startFragments = args._,
     query = args.q || (args.f || fs.existsSync(queryFile) ? fs.readFileSync(queryFile, 'utf8') : queryFile),
-    mimeType = args.t || 'application/json';
+    mimeType = args.t || 'application/json',
+    measurementsName = args.m || 'example';
 
 // Configure logging
 Logger.setLevel(args.l || 'warning');
@@ -55,7 +57,7 @@ if (args.csv) Logger.setMode('CSV');
 // Execute the query and output its results
 config.fragmentsClient = new ldf.FragmentsClient(startFragments, config);
 try {
-  MeasureLogger.init('example');
+  MeasureLogger.init(measurementsName);
   QueryLogger = MeasureLogger.query(query);
   QueryLogger.startProcessingQuery(query);
   var sparqlIterator = new ldf.SparqlIterator(query, config), writer;
