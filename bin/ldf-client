@@ -32,6 +32,27 @@ if (!(args.q || args.f) && args._.length < 2 || args._.length < 1 || args.h || a
   return process.exit(1);
 }
 
+var startTime;
+function startMeasurement() {
+  startTime = Date.now();
+}
+
+function endMeasurement() {
+  var endTime = Date.now();
+  var delta = endTime - startTime;
+  var result = {
+    startTimestamp: startTime,
+    endTimestamp: endTime,
+    executionTime: delta
+  };
+
+  var queryName = args.m || 'example';
+
+  try { fs.mkdirSync('logs'); } catch (e) { }
+  try { fs.mkdirSync(path.join('logs', queryName)); } catch (e) { }
+  fs.writeFileSync(path.join('logs', queryName, 'query_summary.json'), JSON.stringify(result, null, 2));
+}
+
 // Load main libraries (postponed as to here for speed)
 var fs = require('fs'),
     path = require('path'),
@@ -53,6 +74,7 @@ if (args.csv) Logger.setMode('CSV');
 // Execute the query and output its results
 config.fragmentsClient = new ldf.FragmentsClient(startFragments, config);
 try {
+  startMeasurement();
   var sparqlIterator = new ldf.SparqlIterator(query, config), writer;
   switch (sparqlIterator.queryType) {
   // Write JSON representations of the rows or boolean
@@ -60,6 +82,7 @@ try {
   case 'SELECT':
     writer = new ldf.SparqlResultWriter(mimeType, sparqlIterator);
     writer.on('data', function (data) { process.stdout.write(data); });
+    writer.on('end', function () { endMeasurement(); });
     break;
   // Write an RDF representation of all results
   case 'CONSTRUCT':
@@ -67,7 +90,7 @@ try {
     config.end = false; // stdout cannot be closed
     writer = new N3.Writer(process.stdout, config);
     sparqlIterator.on('data', function (triple) { writer.addTriple(triple); })
-                  .on('end',  function () { writer.end(); });
+                  .on('end',  function () { writer.end(); endMeasurement(); });
     break;
   default:
     throw new ldf.SparqlIterator.UnsupportedQueryError(query);
