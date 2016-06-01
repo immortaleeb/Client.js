@@ -36,7 +36,7 @@ Logger.setLevel(args.l || 'warning');
 // Execute the query and output its results
 config.fragmentsClient = new ldf.FragmentsClient(startFragment, config);
 try {
-  MeasureLogger.init(args.m || 'default');
+  MeasureLogger.init(args.m);
   MeasureLogger.startProcessingQuery();
   var sparqlIterator = new ldf.SparqlIterator(query, config), writer;
   switch (sparqlIterator.queryType) {
