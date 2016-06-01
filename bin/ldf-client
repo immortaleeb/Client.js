@@ -47,7 +47,7 @@ var configFile = args.c ? args.c : path.join(__dirname, '../config-default.json'
     startFragments = args._,
     query = args.q || (args.f || fs.existsSync(queryFile) ? fs.readFileSync(queryFile, 'utf8') : queryFile),
     mimeType = args.t || 'application/json',
-    measurementsName = args.m || 'example';
+    measurementsName = args.m;
 
 // Configure logging
 Logger.setLevel(args.l || 'warning');
