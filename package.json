@@ -21,16 +21,17 @@
     "browserify": "browserify browser.js -u stream -o ldf-client-browser.js"
   },
   "dependencies": {
-    "request": "~2.27.0",
-    "n3": "~0.4.3",
-    "setimmediate": "~1.0.1",
-    "sparqljs": "~1.1.0",
-    "uritemplate": "~0.3.0",
     "lodash": "~2.4.1",
+    "lodash-joins": "^2.0.1",
     "lru-cache": "~2.5.0",
     "minimist": "1.1.0",
+    "n3": "~0.4.3",
     "negotiator": "~0.4.9",
-    "triple-graph": "git+https://github.ugent.be:eebral/master-thesis-triple-graph.git#rewrite"
+    "request": "~2.27.0",
+    "setimmediate": "~1.0.1",
+    "sparqljs": "~1.1.0",
+    "triple-graph": "git+https://github.ugent.be:eebral/master-thesis-triple-graph.git#rewrite",
+    "uritemplate": "~0.3.0"
   },
   "optionalDependencies": {
     "xml": ">=1.0.0"
