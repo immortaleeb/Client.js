@@ -30,7 +30,7 @@
     "request": "~2.27.0",
     "setimmediate": "~1.0.1",
     "sparqljs": "~1.1.0",
-    "triple-graph": "git+https://github.ugent.be:eebral/master-thesis-triple-graph.git#rewrite",
+    "triple-graph": "git+ssh://git@github.ugent.be/eebral/master-thesis-triple-graph.git#rewrite",
     "uritemplate": "~0.3.0"
   },
   "optionalDependencies": {
